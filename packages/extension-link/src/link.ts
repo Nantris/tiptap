@@ -99,7 +99,7 @@ export const Link = Mark.create<LinkOptions>({
         rel: 'noopener noreferrer nofollow',
         class: null,
       },
-      validate: undefined,
+      validate: value => true,
     }
   },
 
@@ -166,7 +166,7 @@ export const Link = Mark.create<LinkOptions>({
           const foundLinks: PasteRuleMatch[] = []
 
           if (text) {
-            const links = find(text).filter(item => item.isLink)
+            const links = find(text).filter(item => item.isLink && this.options.validate(item.value))
 
             if (links.length) {
               links.forEach(link => (foundLinks.push({
